@@ -1,0 +1,10 @@
+agent on
+discoverable on
+pairable on
+agent NoInputNoOutput
+scan on
+list
+scan off
+trust 00:1D:A5:68:98:8C
+pair 00:1D:A5:68:98:8C
+connect 00:1D:A5:68:98:8C
