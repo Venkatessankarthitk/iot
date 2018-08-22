@@ -1,0 +1,70 @@
+{% extends "layout/base.html" %}
+{% block title %} RPM SPEED {% endblock %}
+
+{% block content %}
+<body class="mdc-typography">
+
+    <div id="rpmGauge" ></div>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        // $(function () {
+
+            google.charts.load('current', {'packages':['gauge']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart(){
+                var chart = new google.visualization.Gauge(document.getElementById('rpmGauge'));
+                
+                var data = google.visualization.arrayToDataTable([
+                    ['Label', 'Value'],
+                    ['Speed', 0],
+                ]);
+
+                var options = {
+                    width: 600,
+                    height: 300,
+                    redFrom: 140,
+                    redTo: 180,
+                    greenFrom: 60,
+                    greenTo: 100,
+                    yellowFrom: 100,
+                    yellowTo: 140,
+                    minorTicks: 2,
+                    min: 0,
+                    max: 180,
+                    majorTicks: 5,
+                    animation: {
+                    duration: 100
+                    }
+                };
+                // if user is running mozilla then use it's built-in WebSocket
+                window.WebSocket = window.WebSocket || window.MozWebSocket;
+
+                var connection = new WebSocket('ws://127.0.0.1:8001/websocket');
+
+                connection.onopen = function () {
+                    console.log("open")
+                    // connection is opened and ready to use
+                };
+
+                connection.onerror = function (error) {
+                    // an error occurred when sending/receiving data
+                };
+
+                connection.onmessage = function (message) {
+                    // try to decode json (I assume that each message
+                    // from server is json)
+                    try {
+                        var json = JSON.parse(message.data);
+                        data.setValue(0, 1, json.RPM);
+                        chart.draw(data, options);
+                    } catch (e) {
+                    console.log('This doesn\'t look like a valid JSON: ',
+                        message.data);
+                    return;
+                    }              
+                };
+        }
+    </script>
+{% endblock %}

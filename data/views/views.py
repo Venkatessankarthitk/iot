@@ -1,3 +1,5 @@
+import json
+from django.http import HttpResponse
 from rest_framework import serializers, generics
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
@@ -29,5 +31,15 @@ class DataDetail(generics.RetrieveUpdateDestroyAPIView):
 
 #     def post(self, request, format=None):
 #         return Response({'received data': request.data})
+
+def LiveRPM(request):
+    if request.method == 'GET':
+        latest_rpm = Data.objects.latest('updated_on')
+        return HttpResponse(latest_rpm.rpm, content_type="text/json")
+
+def LiveSPEED(request):
+    if request.method == 'GET':
+        latest_speed = Data.objects.latest('updated_on')
+        return HttpResponse(latest_speed.speed, content_type="text/json")
 
 

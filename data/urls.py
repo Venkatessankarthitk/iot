@@ -10,5 +10,9 @@ urlpatterns = [
     path('postdata', TemplateView.as_view(template_name="data.html"), name="postdata"),
     path('', auth_views.login, {'template_name': 'login.html'}, name='login'),
     path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
+    path('rpm', TemplateView.as_view(template_name="rpm.html"), name="rpm"),
+    path('fuel', TemplateView.as_view(template_name="fuel.html"), name="fuel"),
+    path('liverpm', views.LiveRPM, name="LiveRPM"),
+    path('livespeed', views.LiveSPEED, name="LiveSPEED"),
     # path('postdata', views.hello_world)
 ]
