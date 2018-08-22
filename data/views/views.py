@@ -35,7 +35,7 @@ class DataDetail(generics.RetrieveUpdateDestroyAPIView):
 def LiveRPM(request):
     if request.method == 'GET':
         latest_rpm = Data.objects.latest('updated_on')
-        return HttpResponse(latest_rpm.rpm, content_type="text/json")
+        return HttpResponse('60', content_type="text/json")
 
 def LiveSPEED(request):
     if request.method == 'GET':

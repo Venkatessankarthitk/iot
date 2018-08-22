@@ -41,6 +41,7 @@ class WebSocketHandler(websocket.WebSocketHandler):
 
     #create a bunch of random data for various dimensions we want
     latest_rpm = Data.objects.latest('updated_on').rpm
+    latest_speed = Data.objects.latest('updated_on').speed
     qty = random.randrange(1,4)
     total = random.randrange(30,1000)
     tip = random.randrange(10, 100)
@@ -51,7 +52,7 @@ class WebSocketHandler(websocket.WebSocketHandler):
     #create a new data point
     point_data = {
         'RPM': latest_rpm,
-        'quantity': qty,
+        'speed': latest_speed,
         'total' : total,
         'tip': tip,
         'payType': payType,

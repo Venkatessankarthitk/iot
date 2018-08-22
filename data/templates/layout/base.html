@@ -29,6 +29,23 @@
             a:hover{
                 text-decoration: none !important;
             }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            .column {
+                float: left;
+                width: 50%;
+                padding: 8px;
+            }
+
+            /* Clearfix (clear floats) */
+            .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
         </style>
         {% block style %}{% endblock %}
     </head>
